@@ -1,4 +1,4 @@
-namespace Jukebox
+namespace Jukebox.API
 {
     public class WeatherForecast
     {

@@ -1,6 +1,6 @@
 using Microsoft.AspNetCore.Mvc;
 
-namespace Jukebox.Controllers
+namespace Jukebox.API.Controllers
 {
     [ApiController]
     [Route("[controller]")]
