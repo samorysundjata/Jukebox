@@ -8,9 +8,6 @@ EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Jukebox.Tests", "tests\Jukebox.Tests\Jukebox.Tests.csproj", "{7AD8E75D-1532-4EE3-928F-8F120A8109D1}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Arquivos", "Arquivos", "{8C7D5240-FD11-4E86-A125-C32062FFFCE4}"
-	ProjectSection(SolutionItems) = preProject
-		diagrama.xml = diagrama.xml
-	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
