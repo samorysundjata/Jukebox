@@ -13,10 +13,12 @@ namespace Jukebox.API.Models
         [StringLength(80)]
         public string Nome { get; set; }
 
+        [Required]
         public Artista Artista { get; set; }
 
         public DateTime Lancamento { get; set; }
 
+        [Required]
         public ICollection<Musica> Musicas { get; set; }
 
     }
