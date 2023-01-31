@@ -19,7 +19,12 @@ namespace Jukebox.API.Controllers
         { 
             var artistas = _context.Artistas.ToList();
 
-            return View(); 
+            if (artistas is null)
+            {
+                return NotFound("Não foram encotrados artistas.");
+            }
+
+            return artistas;
         }
 
         public ActionResult<Artista> GetArtista(int id) { return View(); }

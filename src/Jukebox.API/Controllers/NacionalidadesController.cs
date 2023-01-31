@@ -21,7 +21,7 @@ namespace Jukebox.API.Controllers
 
             if (nacionalidades is null)
             {
-                return NotFound("Não há nacionalidades");
+                return NotFound("Não há nacionalidades cadastradas.");
             }
 
             return nacionalidades;

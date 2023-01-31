@@ -19,7 +19,12 @@ namespace Jukebox.API.Controllers
         {
             var musicas = _context.Musicas.ToList();
 
-            return View();
+            if (musicas is null)
+            {
+                return NotFound("Não há músicas catalogadas.");
+            }
+
+            return musicas;
         }
 
         public  ActionResult<Musica> GetMusica(int id)
