@@ -15,10 +15,10 @@ namespace Jukebox.API.Controllers
             _context = context;
         }
 
+        [HttpGet]
         public ActionResult<IEnumerable<Musica>> GetMusicas()
         {
             var musicas = _context.Musicas.ToList();
-
             if (musicas is null)
             {
                 return NotFound("Não há músicas catalogadas.");
@@ -27,6 +27,7 @@ namespace Jukebox.API.Controllers
             return musicas;
         }
 
+        [HttpGet]
         public  ActionResult<Musica> GetMusica(int id)
         {
             return View();

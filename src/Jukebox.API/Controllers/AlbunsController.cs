@@ -15,18 +15,18 @@ namespace Jukebox.API.Controllers
             _context = context;
         }
 
+        [HttpGet]
         public ActionResult<IEnumerable<Album>> GetAlbuns() 
         { 
             var albuns = _context.Albuns.ToList();
-
-            if (albuns is null)
-            {
-                return NotFound("Não foram encontrados álbuns.");
-            }
-
+            if (albuns is null) { return NotFound("Não foram encontrados álbuns."); }
             return albuns;
         }
 
-        public ActionResult<Album> GetAlbum(int id) { return View(); }
+        [HttpGet]
+        public ActionResult<Album> GetAlbum(int id) 
+        { 
+            return View(); 
+        }
     }
 }

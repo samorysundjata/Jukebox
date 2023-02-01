@@ -15,10 +15,10 @@ namespace Jukebox.API.Controllers
             _context = context;
         }
 
+        [HttpGet]
         public ActionResult<IEnumerable<Genero>> GetGeneros() 
         { 
             var generos = _context.Generos.ToList();
-
             if (generos is null)
             {
                 return NotFound("Não foram encotrados gêneros registrados.");
@@ -29,6 +29,7 @@ namespace Jukebox.API.Controllers
 
         public ActionResult<Genero> GetGenero(int id) { return View(); }
 
+        [HttpGet]
         public ActionResult<IEnumerable<Subgenero>> GetSubgeneros() 
         { 
             var subgeneros  = _context.Subgeneros.ToList();
@@ -41,6 +42,7 @@ namespace Jukebox.API.Controllers
             return subgeneros;
         }
 
+        [HttpGet]
         public ActionResult<Subgenero> GetSubgenero(int id) { return View(); }
 
     }
