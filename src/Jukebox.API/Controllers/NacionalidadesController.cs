@@ -2,7 +2,6 @@
 using Jukebox.API.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using System.Security.Permissions;
 
 namespace Jukebox.API.Controllers
 {
@@ -21,26 +20,15 @@ namespace Jukebox.API.Controllers
         public ActionResult<IEnumerable<Nacionalidade>> GetNacionalidades() 
         { 
             var nacionalidades = _context.Nacionalidades.ToList();
-
-            if (nacionalidades is null)
-            {
-                return NotFound("Não há nacionalidades cadastradas.");
-            }
-
+            if (nacionalidades is null)  { return NotFound("Não há nacionalidades cadastradas."); }
             return nacionalidades;
-
         }
 
         [HttpGet("{sigla:string}", Name = "TrazerNacionalidade")]
         public ActionResult<Nacionalidade> GetNacionalidade(string sigla)
         {
             var nacionalidade  = _context.Nacionalidades.FirstOrDefault(n => n.Sigla == sigla);
-
-            if (nacionalidade is null)
-            {
-                return NotFound("Nacionalidade não encontrada.");
-            }
-
+            if (nacionalidade is null)  { return NotFound("Nacionalidade não encontrada."); }
             return nacionalidade;
         }
 
@@ -66,5 +54,19 @@ namespace Jukebox.API.Controllers
 
             return Ok(nacionalidade);
         }
+
+        [HttpDelete]
+        public ActionResult DeleteNacionalidade(string sigla)
+        {
+            var nacionalidade = _context.Nacionalidades.FirstOrDefault(n => n.Sigla == sigla);
+
+            if (nacionalidade is null) { return NotFound("Nacionalidade não encontrada para exclusão."); }
+
+            _context.Nacionalidades.Remove(nacionalidade);
+            _context.SaveChanges();
+
+            return Ok(nacionalidade);
+        }
+
     }
 }

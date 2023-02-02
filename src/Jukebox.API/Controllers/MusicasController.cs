@@ -19,18 +19,24 @@ namespace Jukebox.API.Controllers
         public ActionResult<IEnumerable<Musica>> GetMusicas()
         {
             var musicas = _context.Musicas.ToList();
-            if (musicas is null)
-            {
-                return NotFound("Não há músicas catalogadas.");
-            }
-
+            if (musicas is null)  { return NotFound("Não há músicas catalogadas."); }
             return musicas;
         }
 
-        [HttpGet]
+        [HttpGet("{id:int}", Name ="TrazerMusica")]
         public  ActionResult<Musica> GetMusica(int id)
         {
-            return View();
+            var musica = _context.Musicas.FirstOrDefault(m => m.MusicaId == id);
+            if (musica is null) { return NotFound("Música não encontrada"); }
+            return musica;
         }
+
+        [HttpPost]
+        public ActionResult PostMusica(Musica musica)
+        {
+            return View(musica);
+        }
+
+        [HttpPut]
     }
 }

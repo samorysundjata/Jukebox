@@ -19,11 +19,7 @@ namespace Jukebox.API.Controllers
         public ActionResult<IEnumerable<Artista>> GetArtistas() 
         { 
             var artistas = _context.Artistas.ToList();
-            if (artistas is null)
-            {
-                return NotFound("Não foram encotrados artistas.");
-            }
-
+            if (artistas is null)  { return NotFound("Não foram encotrados artistas."); }
             return artistas;
         }
 
@@ -36,7 +32,11 @@ namespace Jukebox.API.Controllers
         }
 
         [HttpPost]
+        public ActionResult PostArtista(Artista artista)
+        {
+            return View(artista);
+        }
 
-        [HttpPut]
+        [HttpPut("{id:int}")]
     }
 }

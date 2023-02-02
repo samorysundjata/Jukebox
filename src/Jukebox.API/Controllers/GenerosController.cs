@@ -19,31 +19,25 @@ namespace Jukebox.API.Controllers
         public ActionResult<IEnumerable<Genero>> GetGeneros() 
         { 
             var generos = _context.Generos.ToList();
-            if (generos is null)
-            {
-                return NotFound("Não foram encotrados gêneros registrados.");
-            }
-
+            if (generos is null) { return NotFound("Não foram encotrados gêneros registrados."); }
             return generos;
         }
 
-        public ActionResult<Genero> GetGenero(int id) { return View(); }
-
-        [HttpGet]
-        public ActionResult<IEnumerable<Subgenero>> GetSubgeneros() 
-        { 
-            var subgeneros  = _context.Subgeneros.ToList();
-
-            if (subgeneros is null)
-            {
-                return NotFound("Não há subgêneros cadastrados.");
-            }
-
-            return subgeneros;
+        [HttpGet("{id:int}", Name ="TrazerGenero")]
+        public ActionResult<Genero> GetGenero(int id) 
+        {
+            var genero = _context.Generos.FirstOrDefault(g => g.GeneroId == id);
+            if(genero is null) { return NotFound("Gênero ou subgênero não encontrado"!); }
+            return genero;
         }
 
-        [HttpGet]
-        public ActionResult<Subgenero> GetSubgenero(int id) { return View(); }
+        [HttpPost]
+        public ActionResult PostGenero(Genero genero)
+        {
+            return View(genero);
+        }
+
+        [HttpPut]      
 
     }
 }

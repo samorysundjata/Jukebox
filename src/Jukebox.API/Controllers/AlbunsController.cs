@@ -23,10 +23,20 @@ namespace Jukebox.API.Controllers
             return albuns;
         }
 
-        [HttpGet]
+        [HttpGet("id:int", Name ="TrazerAlbum")]
         public ActionResult<Album> GetAlbum(int id) 
         { 
-            return View(); 
+            var album = _context.Albuns.FirstOrDefault(a => a.AlbumId== id);
+            if(album == null) { return NotFound("Album não encontrado."); }
+            return album;
         }
+
+        [HttpPost]
+        public ActionResult PostAlbum(Album album)
+        {
+            return View(album);
+        }
+
+        [HttpPut]
     }
 }

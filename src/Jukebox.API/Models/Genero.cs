@@ -13,7 +13,9 @@ namespace Jukebox.API.Models
         [StringLength(50)]
         public string Nome { get; set; }
 
-        public ICollection<Subgenero>? Subgeneros { get; set;}
+        public Genero? GeneroPai { get; set; }
+
+        public ICollection<Genero>? Subgeneros { get; set;}
 
     }
 }
