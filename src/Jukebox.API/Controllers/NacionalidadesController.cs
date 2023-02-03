@@ -36,6 +36,7 @@ namespace Jukebox.API.Controllers
         public ActionResult PostNacionalidade(Nacionalidade nacionalidade)
         {
             //TODO: verificar se a sigla já existe antes de inserir
+            //Fazer um método de busca pelo nome.
             if(nacionalidade is null) { return BadRequest(); }
             _context.Nacionalidades.Add(nacionalidade);
             _context.SaveChanges();

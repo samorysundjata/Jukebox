@@ -34,9 +34,22 @@ namespace Jukebox.API.Controllers
         [HttpPost]
         public ActionResult PostAlbum(Album album)
         {
-            return View(album);
+            //TODO: verificar se já existe na base antes de inserir.
+            if (album is null) { return BadRequest(); }
+            _context.Albuns.Add(album);
+            _context.SaveChanges();
+
+            return new CreatedAtRouteResult("TrazerAlbum", 
+                new { id = album.AlbumId}, album);
         }
 
-        [HttpPut]
+        [HttpPut("{id:int}")]
+        public ActionResult PutAlbum(int id, Album album)
+        {
+            if(album is null) { return BadRequest(); }
+            return Ok(album);
+        }
+
+        [HttpDelete]
     }
 }

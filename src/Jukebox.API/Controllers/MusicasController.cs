@@ -34,9 +34,22 @@ namespace Jukebox.API.Controllers
         [HttpPost]
         public ActionResult PostMusica(Musica musica)
         {
-            return View(musica);
+            //TODO: verificar se já existe na base antes de inserir.
+            if (musica is null) { return BadRequest(); }
+            _context.Musicas.Add(musica);
+            _context.SaveChanges();
+
+            return new CreatedAtRouteResult("TrazerMusica", 
+                new { id = musica.MusicaId}, musica);
         }
 
-        [HttpPut]
+        [HttpPut("{id:int}")]
+        public ActionResult PutMusica(int id, Musica musica)
+        {
+            if(musica is null) { return BadRequest(); }
+            return Ok(musica);
+        }
+
+        [HttpDelete]
     }
 }

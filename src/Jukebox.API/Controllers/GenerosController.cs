@@ -34,10 +34,23 @@ namespace Jukebox.API.Controllers
         [HttpPost]
         public ActionResult PostGenero(Genero genero)
         {
-            return View(genero);
+            //TODO: verificar se já existe na base antes de inserir.
+            if (genero is null) { return BadRequest(); }
+            _context.Generos.Add(genero);
+            _context.SaveChanges();
+
+            return new CreatedAtRouteResult("TrazerGenero",
+                new { id = genero.GeneroId }, genero);
         }
 
-        [HttpPut]      
+        [HttpPut("{id:int}")]
+        public ActionResult PutGenero(int id, Genero genero)
+        {
+            if(genero is null) { return BadRequest(); }
+            return Ok(genero);
+        }
+
+        [HttpDelete]
 
     }
 }
