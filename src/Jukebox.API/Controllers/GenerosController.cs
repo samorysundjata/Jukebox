@@ -1,6 +1,7 @@
 ﻿using Jukebox.API.Context;
 using Jukebox.API.Models;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 
 namespace Jukebox.API.Controllers
 {
@@ -46,11 +47,22 @@ namespace Jukebox.API.Controllers
         [HttpPut("{id:int}")]
         public ActionResult PutGenero(int id, Genero genero)
         {
-            if(genero is null) { return BadRequest(); }
+            if(id != genero.GeneroId) { return BadRequest(); }
+
+            _context.Entry(genero).State = EntityState.Modified;
+            _context.SaveChanges(); 
+
             return Ok(genero);
         }
 
         [HttpDelete]
+        public ActionResult DeleteGenero(int id) 
+        {
+            //TODO: quando for gênero pai vai ter que bloquear a exclusão. Quando já estiver na base também.
+            var genero = _context.Generos.FirstOrDefault(g => g.GeneroId == id);
+            if (genero is null) { return NotFound("Gênero não encontrado para exclusão!"); }
+            return Ok();
+        }
 
     }
 }
