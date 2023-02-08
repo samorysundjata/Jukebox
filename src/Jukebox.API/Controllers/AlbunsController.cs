@@ -59,7 +59,11 @@ namespace Jukebox.API.Controllers
         public ActionResult DeleteAlbum(int id) 
         {
             var album = _context.Albuns.FirstOrDefault(a => a.AlbumId == id);
-            if (album is null) { return NotFound("Álbum não encontrado para exclusão!"); }
+            if(album is null) { return NotFound("Álbum não encontrado para exclusão!"); }
+
+            _context.Albuns.Remove(album);
+            _context.SaveChanges();
+
             return Ok();
         }
     }

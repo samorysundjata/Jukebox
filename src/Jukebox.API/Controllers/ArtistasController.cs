@@ -59,7 +59,11 @@ namespace Jukebox.API.Controllers
         public ActionResult DeleteArtista(int id) 
         {
             var artista = _context.Artistas.FirstOrDefault(a => a.ArtistaId == id);
-            if (artista is null) { return NotFound("Artista não encontrado para exclusão!"); }
+            if(artista is null) { return NotFound("Artista não encontrado para exclusão!"); }
+
+            _context.Artistas.Remove(artista);
+            _context.SaveChanges();
+
             return Ok();
         }
     }

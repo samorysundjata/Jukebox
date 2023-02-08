@@ -61,7 +61,7 @@ namespace Jukebox.API.Controllers
         {
             var nacionalidade = _context.Nacionalidades.FirstOrDefault(n => n.Sigla == sigla);
 
-            if (nacionalidade is null) { return NotFound("Nacionalidade não encontrada para exclusão."); }
+            if(nacionalidade is null) { return NotFound("Nacionalidade não encontrada para exclusão."); }
 
             _context.Nacionalidades.Remove(nacionalidade);
             _context.SaveChanges();

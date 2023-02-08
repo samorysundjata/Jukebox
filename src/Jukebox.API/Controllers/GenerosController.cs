@@ -60,7 +60,11 @@ namespace Jukebox.API.Controllers
         {
             //TODO: quando for gênero pai vai ter que bloquear a exclusão. Quando já estiver na base também.
             var genero = _context.Generos.FirstOrDefault(g => g.GeneroId == id);
-            if (genero is null) { return NotFound("Gênero não encontrado para exclusão!"); }
+            if(genero is null) { return NotFound("Gênero não encontrado para exclusão!"); }
+
+            _context.Generos.Remove(genero);
+            _context.SaveChanges();
+
             return Ok();
         }
 
