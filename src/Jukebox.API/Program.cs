@@ -15,6 +15,8 @@ if (app.Environment.IsDevelopment())
     app.UseSwaggerUI();
 }
 
+//TODO:Colocar o controle de erro quando não for desenvolvimento
+
 app.UseHttpsRedirection();
 
 app.UseAuthorization();
