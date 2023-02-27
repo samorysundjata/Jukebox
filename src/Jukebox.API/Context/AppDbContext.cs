@@ -2,8 +2,7 @@
 using Microsoft.EntityFrameworkCore;
 
 namespace Jukebox.API.Context
-{
-    //TODO: fazer o script de inserção de dados.
+{    
     public class AppDbContext : DbContext
     {
         public DbSet<Musica> Musicas { get; set; }

@@ -1,6 +1,7 @@
 ﻿using Jukebox.API.Context;
 using Jukebox.API.Models;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 
 namespace Jukebox.API.Controllers
 {
@@ -46,10 +47,24 @@ namespace Jukebox.API.Controllers
         [HttpPut("{id:int}")]
         public ActionResult PutMusica(int id, Musica musica)
         {
-            if(musica is null) { return BadRequest(); }
+            if(id != musica.MusicaId) { return BadRequest(); }
+
+            _context.Entry(musica).State = EntityState.Modified;
+            _context.SaveChanges();
+
             return Ok(musica);
         }
 
         [HttpDelete]
+        public ActionResult DeleteMusica(int id)
+        {
+            var musica = _context.Musicas.FirstOrDefault(m => m.MusicaId == id);
+            if(musica is null) { return NotFound("Música não encontrada para exclusão!"); }  
+
+            _context.Musicas.Remove(musica);
+            _context.SaveChanges();
+
+            return Ok();
+        }
     }
 }
