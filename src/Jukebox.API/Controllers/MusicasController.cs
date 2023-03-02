@@ -16,7 +16,7 @@ namespace Jukebox.API.Controllers
             _context = context;
         }
 
-        [HttpGet]
+        [HttpGet("musicas")]
         public ActionResult<IEnumerable<Musica>> GetMusicas()
         {
             var musicas = _context.Musicas.ToList();
@@ -55,7 +55,7 @@ namespace Jukebox.API.Controllers
             return Ok(musica);
         }
 
-        [HttpDelete]
+        [HttpDelete("{id:int}")]
         public ActionResult DeleteMusica(int id)
         {
             var musica = _context.Musicas.FirstOrDefault(m => m.MusicaId == id);

@@ -16,7 +16,7 @@ namespace Jukebox.API.Controllers
             _context = context;
         }
 
-        [HttpGet]
+        [HttpGet("nacionalidades")]
         public ActionResult<IEnumerable<Nacionalidade>> GetNacionalidades() 
         {
             try
@@ -33,13 +33,14 @@ namespace Jukebox.API.Controllers
            
         }
 
-        [HttpGet("{sigla:string}", Name = "TrazerNacionalidade")]
+        //[HttpGet("{sigla:string}", Name = "TrazerNacionalidade")]
+        [HttpGet]
         public ActionResult<Nacionalidade> GetNacionalidade(string sigla)
         {
             try
             {
-                var nacionalidade  = _context.Nacionalidades.FirstOrDefault(n => n.Sigla == sigla);
-                if (nacionalidade is null)  { return NotFound("Nacionalidade não encontrada."); }
+                var nacionalidade = _context.Nacionalidades.FirstOrDefault(n => n.Sigla == sigla);
+                if (nacionalidade is null) { return NotFound("Nacionalidade não encontrada."); }
                 return nacionalidade;
             }
             catch (Exception)
@@ -47,7 +48,7 @@ namespace Jukebox.API.Controllers
 
                 throw;
             }
-            
+
         }
 
         [HttpPost]
@@ -72,7 +73,8 @@ namespace Jukebox.API.Controllers
             
         }
 
-        [HttpPut("sigla:string")]
+        //[HttpPut("{sigla:string}")]
+        [HttpPut]
         public ActionResult PutNacionalidade(string sigla, Nacionalidade nacionalidade)
         {
             try
@@ -92,7 +94,8 @@ namespace Jukebox.API.Controllers
             
         }
 
-        [HttpDelete]
+        //[HttpDelete("{sigla:string}")]
+        [HttpDelete("{sigla}")]
         public ActionResult DeleteNacionalidade(string sigla)
         {
             try

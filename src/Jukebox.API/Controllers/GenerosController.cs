@@ -16,7 +16,7 @@ namespace Jukebox.API.Controllers
             _context = context;
         }
 
-        [HttpGet]
+        [HttpGet("generos")]
         public ActionResult<IEnumerable<Genero>> GetGeneros() 
         { 
             var generos = _context.Generos.ToList();
@@ -55,7 +55,7 @@ namespace Jukebox.API.Controllers
             return Ok(genero);
         }
 
-        [HttpDelete]
+        [HttpDelete("{id:int}")]
         public ActionResult DeleteGenero(int id) 
         {
             //TODO: quando for gênero pai vai ter que bloquear a exclusão. Quando já estiver na base também.
