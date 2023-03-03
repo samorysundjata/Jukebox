@@ -16,7 +16,7 @@ namespace Jukebox.API.Controllers
             _context = context;
         }
 
-        [HttpGet("generos")]
+        [HttpGet]
         public ActionResult<IEnumerable<Genero>> GetGeneros() 
         { 
             var generos = _context.Generos.ToList();

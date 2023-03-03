@@ -13,7 +13,6 @@ namespace Jukebox.API.Context
         public DbSet<Genero> Generos { get; set; }
         public DbSet<Genero> Subgeneros { get; set; }
         
-
         protected override void OnConfiguring(DbContextOptionsBuilder options)
             => options.UseSqlite("DataSource=junkebox.db;Cache=Shared");
 

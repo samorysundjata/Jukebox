@@ -33,8 +33,8 @@ namespace Jukebox.API.Controllers
            
         }
 
-        //[HttpGet("{sigla:string}", Name = "TrazerNacionalidade")]
-        [HttpGet]
+        [HttpGet("{sigla}", Name = "TrazerNacionalidade")]
+        //[HttpGet]
         public ActionResult<Nacionalidade> GetNacionalidade(string sigla)
         {
             try
@@ -74,7 +74,7 @@ namespace Jukebox.API.Controllers
         }
 
         //[HttpPut("{sigla:string}")]
-        [HttpPut]
+        [HttpPut("{sigla}")]
         public ActionResult PutNacionalidade(string sigla, Nacionalidade nacionalidade)
         {
             try
