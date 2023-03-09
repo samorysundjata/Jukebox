@@ -16,10 +16,10 @@ namespace Jukebox.API.Controllers
             _context = context;
         }
 
-        [HttpGet]
+        [HttpGet("generos")]
         public ActionResult<IEnumerable<Genero>> GetGeneros() 
         { 
-            var generos = _context.Generos.ToList();
+            var generos = _context.Generos.Include(g => g.Subgeneros).ToList();
             if (generos is null) { return NotFound("Não foram encotrados gêneros registrados."); }
             return generos;
         }

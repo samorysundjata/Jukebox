@@ -2,6 +2,7 @@
 using Jukebox.API.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using System;
 
 namespace Jukebox.API.Controllers
 {
@@ -33,8 +34,7 @@ namespace Jukebox.API.Controllers
            
         }
 
-        [HttpGet("{sigla}", Name = "TrazerNacionalidade")]
-        //[HttpGet]
+        [HttpGet("{sigla}", Name = "TrazerNacionalidade")]       
         public ActionResult<Nacionalidade> GetNacionalidade(string sigla)
         {
             try
@@ -56,9 +56,10 @@ namespace Jukebox.API.Controllers
         {
             try
             {
-                //TODO: verificar se a sigla já existe antes de inserir
-                //Fazer um método de busca pelo nome.
-                if(nacionalidade is null) { return BadRequest(); }
+                var existeNacionalidade = _context.Nacionalidades.FirstOrDefault(n => n.Nome == nacionalidade.Nome);
+                if (existeNacionalidade is not null) { return BadRequest("Já existe nacionalidade com este nome "); }
+
+                if (nacionalidade is null) { return BadRequest(); }
                 _context.Nacionalidades.Add(nacionalidade);
                 _context.SaveChanges();
 
@@ -67,13 +68,12 @@ namespace Jukebox.API.Controllers
             }
             catch (Exception)
             {
-
-                throw;
+                return StatusCode(StatusCodes.Status500InternalServerError,
+                               "Ocorreu um problema ao tratar a sua solicitação.");
             }
-            
+
         }
 
-        //[HttpPut("{sigla:string}")]
         [HttpPut("{sigla}")]
         public ActionResult PutNacionalidade(string sigla, Nacionalidade nacionalidade)
         {
@@ -88,13 +88,12 @@ namespace Jukebox.API.Controllers
             }
             catch (Exception)
             {
-
-                throw;
+                return StatusCode(StatusCodes.Status500InternalServerError,
+                               "Ocorreu um problema ao tratar a sua solicitação.");
             }
-            
+
         }
 
-        //[HttpDelete("{sigla:string}")]
         [HttpDelete("{sigla}")]
         public ActionResult DeleteNacionalidade(string sigla)
         {
@@ -111,10 +110,10 @@ namespace Jukebox.API.Controllers
             }
             catch (Exception)
             {
-
-                throw;
+                return StatusCode(StatusCodes.Status500InternalServerError,
+                               "Ocorreu um problema ao tratar a sua solicitação.");
             }
-            
+
         }
 
     }
