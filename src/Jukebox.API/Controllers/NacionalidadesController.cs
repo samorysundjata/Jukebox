@@ -2,6 +2,7 @@
 using Jukebox.API.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using System;
 
 namespace Jukebox.API.Controllers
 {
@@ -16,57 +17,103 @@ namespace Jukebox.API.Controllers
             _context = context;
         }
 
-        [HttpGet]
+        [HttpGet("nacionalidades")]
         public ActionResult<IEnumerable<Nacionalidade>> GetNacionalidades() 
-        { 
-            var nacionalidades = _context.Nacionalidades.ToList();
-            if (nacionalidades is null)  { return NotFound("Não há nacionalidades cadastradas."); }
-            return nacionalidades;
+        {
+            try
+            {
+                var nacionalidades = _context.Nacionalidades.ToList();
+                if (nacionalidades is null)  { return NotFound("Não há nacionalidades cadastradas."); }
+                return nacionalidades;
+            }
+            catch (Exception)
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError,
+                               "Ocorreu um problema ao tratar a sua solicitação.");
+            }
+
         }
 
-        [HttpGet("{sigla:string}", Name = "TrazerNacionalidade")]
+        [HttpGet("{sigla}", Name = "TrazerNacionalidade")]       
         public ActionResult<Nacionalidade> GetNacionalidade(string sigla)
         {
-            var nacionalidade  = _context.Nacionalidades.FirstOrDefault(n => n.Sigla == sigla);
-            if (nacionalidade is null)  { return NotFound("Nacionalidade não encontrada."); }
-            return nacionalidade;
+            try
+            {
+                var nacionalidade = _context.Nacionalidades.FirstOrDefault(n => n.Sigla == sigla);
+                if (nacionalidade is null) { return NotFound("Nacionalidade não encontrada."); }
+                return nacionalidade;
+            }
+            catch (Exception)
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError,
+                               "Ocorreu um problema ao tratar a sua solicitação.");
+            }
+
         }
 
         [HttpPost]
         public ActionResult PostNacionalidade(Nacionalidade nacionalidade)
         {
-            //TODO: verificar se a sigla já existe antes de inserir
-            //Fazer um método de busca pelo nome.
-            if(nacionalidade is null) { return BadRequest(); }
-            _context.Nacionalidades.Add(nacionalidade);
-            _context.SaveChanges();
+            try
+            {
+                var existeNacionalidade = _context.Nacionalidades.FirstOrDefault(n => n.Nome == nacionalidade.Nome);
+                if (existeNacionalidade is not null) { return BadRequest("Já existe nacionalidade com este nome "); }
 
-            return new CreatedAtRouteResult("TrazerNacionalidade", 
-                new { sigla = nacionalidade.Sigla }, nacionalidade);
+                if (nacionalidade is null) { return BadRequest(); }
+                _context.Nacionalidades.Add(nacionalidade);
+                _context.SaveChanges();
+
+                return new CreatedAtRouteResult("TrazerNacionalidade", 
+                    new { sigla = nacionalidade.Sigla }, nacionalidade);
+            }
+            catch (Exception)
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError,
+                               "Ocorreu um problema ao tratar a sua solicitação.");
+            }
+
         }
 
-        [HttpPut("sigla:string")]
+        [HttpPut("{sigla}")]
         public ActionResult PutNacionalidade(string sigla, Nacionalidade nacionalidade)
         {
-            if (sigla != nacionalidade.Sigla) { return BadRequest(); }        
+            try
+            {
+                if (sigla != nacionalidade.Sigla) { return BadRequest(); }        
             
-            _context.Entry(nacionalidade).State = EntityState.Modified;
-            _context.SaveChanges();
+                _context.Entry(nacionalidade).State = EntityState.Modified;
+                _context.SaveChanges();
 
-            return Ok(nacionalidade);
+                return Ok(nacionalidade);
+            }
+            catch (Exception)
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError,
+                               "Ocorreu um problema ao tratar a sua solicitação.");
+            }
+
         }
 
-        [HttpDelete]
+        [HttpDelete("{sigla}")]
         public ActionResult DeleteNacionalidade(string sigla)
         {
-            var nacionalidade = _context.Nacionalidades.FirstOrDefault(n => n.Sigla == sigla);
+            try
+            {
+                var nacionalidade = _context.Nacionalidades.FirstOrDefault(n => n.Sigla == sigla);
 
-            if(nacionalidade is null) { return NotFound("Nacionalidade não encontrada para exclusão."); }
+                if(nacionalidade is null) { return NotFound("Nacionalidade não encontrada para exclusão."); }
 
-            _context.Nacionalidades.Remove(nacionalidade);
-            _context.SaveChanges();
+                _context.Nacionalidades.Remove(nacionalidade);
+                _context.SaveChanges();
 
-            return Ok(nacionalidade);
+                return Ok(nacionalidade);
+            }
+            catch (Exception)
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError,
+                               "Ocorreu um problema ao tratar a sua solicitação.");
+            }
+
         }
 
     }

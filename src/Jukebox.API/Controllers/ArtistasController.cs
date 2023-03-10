@@ -16,7 +16,7 @@ namespace Jukebox.API.Controllers
             _context = context;
         }
 
-        [HttpGet]
+        [HttpGet("artistas")]
         public ActionResult<IEnumerable<Artista>> GetArtistas() 
         {
             try
@@ -87,7 +87,7 @@ namespace Jukebox.API.Controllers
             }            
         }
 
-        [HttpDelete]
+        [HttpDelete("{id:int}")]
         public ActionResult DeleteArtista(int id) 
         {
             try

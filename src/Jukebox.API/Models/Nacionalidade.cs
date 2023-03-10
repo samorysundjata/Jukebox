@@ -7,6 +7,7 @@ namespace Jukebox.API.Models
     public class Nacionalidade
     {
         [Key]
+        [Required]
         public string Sigla { get; set;}
 
         [Required]

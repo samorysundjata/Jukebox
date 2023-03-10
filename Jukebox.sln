@@ -9,7 +9,6 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Jukebox.Tests", "tests\Juke
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Files", "Files", "{D6B9FDAF-5444-4371-8E58-E6B631DEA87A}"
 	ProjectSection(SolutionItems) = preProject
-		arquivo_texto.txt = arquivo_texto.txt
 		diagrama_simples.xml = diagrama_simples.xml
 		models.drawio = models.drawio
 	EndProjectSection
