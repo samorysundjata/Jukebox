@@ -28,10 +28,10 @@ namespace Jukebox.API.Controllers
             }
             catch (Exception)
             {
-
-                throw;
+                return StatusCode(StatusCodes.Status500InternalServerError,
+                               "Ocorreu um problema ao tratar a sua solicitação.");
             }
-           
+
         }
 
         [HttpGet("{sigla}", Name = "TrazerNacionalidade")]       
@@ -45,8 +45,8 @@ namespace Jukebox.API.Controllers
             }
             catch (Exception)
             {
-
-                throw;
+                return StatusCode(StatusCodes.Status500InternalServerError,
+                               "Ocorreu um problema ao tratar a sua solicitação.");
             }
 
         }

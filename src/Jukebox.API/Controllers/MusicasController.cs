@@ -19,52 +19,93 @@ namespace Jukebox.API.Controllers
         [HttpGet("musicas")]
         public ActionResult<IEnumerable<Musica>> GetMusicas()
         {
-            var musicas = _context.Musicas.ToList();
-            if (musicas is null)  { return NotFound("Não há músicas catalogadas."); }
-            return musicas;
+            try
+            {
+                var musicas = _context.Musicas.ToList();
+                if (musicas is null)  { return NotFound("Não há músicas catalogadas."); }
+                return musicas;
+            }
+            catch (Exception)
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError,
+                               "Ocorreu um problema ao tratar a sua solicitação.");
+            }
+
         }
 
         [HttpGet("{id:int}", Name ="TrazerMusica")]
         public  ActionResult<Musica> GetMusica(int id)
         {
-            var musica = _context.Musicas.FirstOrDefault(m => m.MusicaId == id);
-            if (musica is null) { return NotFound("Música não encontrada"); }
-            return musica;
+            try
+            {
+                var musica = _context.Musicas.FirstOrDefault(m => m.MusicaId == id);
+                if (musica is null) { return NotFound("Música não encontrada"); }
+                return musica;
+            }
+            catch (Exception)
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError,
+                               "Ocorreu um problema ao tratar a sua solicitação.");
+            }
         }
 
         [HttpPost]
         public ActionResult PostMusica(Musica musica)
         {
-            //TODO: verificar se já existe na base antes de inserir.
-            if (musica is null) { return BadRequest(); }
-            _context.Musicas.Add(musica);
-            _context.SaveChanges();
+            try
+            {
+                //TODO: verificar se já existe na base antes de inserir.
+                if (musica is null) { return BadRequest(); }
+                _context.Musicas.Add(musica);
+                _context.SaveChanges();
 
-            return new CreatedAtRouteResult("TrazerMusica", 
-                new { id = musica.MusicaId}, musica);
+                return new CreatedAtRouteResult("TrazerMusica",
+                    new { id = musica.MusicaId }, musica);
+            }
+            catch (Exception)
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError,
+                               "Ocorreu um problema ao tratar a sua solicitação.");
+            }
         }
 
         [HttpPut("{id:int}")]
         public ActionResult PutMusica(int id, Musica musica)
         {
-            if(id != musica.MusicaId) { return BadRequest(); }
+            try
+            {
+                if (id != musica.MusicaId) { return BadRequest(); }
 
-            _context.Entry(musica).State = EntityState.Modified;
-            _context.SaveChanges();
+                _context.Entry(musica).State = EntityState.Modified;
+                _context.SaveChanges();
 
-            return Ok(musica);
+                return Ok(musica);
+            }
+            catch (Exception)
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError,
+                               "Ocorreu um problema ao tratar a sua solicitação.");
+            }
         }
 
         [HttpDelete("{id:int}")]
         public ActionResult DeleteMusica(int id)
         {
-            var musica = _context.Musicas.FirstOrDefault(m => m.MusicaId == id);
-            if(musica is null) { return NotFound("Música não encontrada para exclusão!"); }  
+            try
+            {
+                var musica = _context.Musicas.FirstOrDefault(m => m.MusicaId == id);
+                if (musica is null) { return NotFound("Música não encontrada para exclusão!"); }
 
-            _context.Musicas.Remove(musica);
-            _context.SaveChanges();
+                _context.Musicas.Remove(musica);
+                _context.SaveChanges();
 
-            return Ok();
+                return Ok();
+            }
+            catch (Exception)
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError,
+                               "Ocorreu um problema ao tratar a sua solicitação.");
+            }
         }
     }
 }
